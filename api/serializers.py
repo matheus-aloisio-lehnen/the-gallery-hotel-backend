@@ -14,10 +14,13 @@ class PersonalDataSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
-    personal_data = PersonalDataSerializer()
+    personalData = PersonalDataSerializer()
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'role', 'personal_data', 'address']
+        fields = ['id', 'email', 'password', 'role', 'personalData', 'address']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
