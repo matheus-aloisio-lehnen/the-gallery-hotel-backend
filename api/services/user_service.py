@@ -1,6 +1,7 @@
 from rest_framework.exceptions import ValidationError
 from api.models import User, Address, PersonalData
 
+
 def create_user(data):
     if User.objects.filter(email=data.get('email')).exists():
         raise ValidationError('Já existe um usuário com este email')
@@ -31,3 +32,39 @@ def create_user(data):
         address=address
     )
     return user
+
+
+def get_address_data(address):
+    try:
+        return {
+            'zipCode': address.zipCode,
+            'street': address.street,
+            'number': address.number,
+            'city': address.city,
+            'uf': address.uf
+        }
+    except AttributeError:
+        return None
+
+
+def get_personal_data(personal_data):
+    try:
+        return {
+            'name': personal_data.name,
+            'documentNumber': personal_data.documentNumber,
+            'mobile': personal_data.mobile
+        }
+    except AttributeError:
+        return None
+
+
+def get_user_data(user):
+    try:
+        return {
+            'id': user.id,
+            'email': user.email,
+            'personalData': get_personal_data(user.personalData),
+            'address': get_address_data(user.address)
+        }
+    except AttributeError:
+        return None

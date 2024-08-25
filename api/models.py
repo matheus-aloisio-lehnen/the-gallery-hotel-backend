@@ -51,5 +51,6 @@ class Reservation(models.Model):
     room = models.ForeignKey(Room, null=True, blank=True, on_delete=models.SET_NULL)
     startDate = models.DateField()
     endDate = models.DateField()
-    qrQode = models.CharField(max_length=255, blank=True, null=True)
-    qrQodeStatus = models.BooleanField(default=False)
+    qrCode = models.TextField(blank=True, null=True)
+    qrCodeStatus = models.BooleanField(default=False)
+    checkedOut = models.BooleanField(default=False)

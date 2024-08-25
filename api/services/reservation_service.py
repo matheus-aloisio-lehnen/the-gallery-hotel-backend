@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from api.models import Room, User, Reservation
 from api.serializers import ReservationSerializer
-from api.services.user_service import create_user
+from api.services.user_service import create_user, get_user_data
 
 
 def create_reservation(data):
@@ -35,3 +35,17 @@ def create_reservation(data):
     )
     serializer = ReservationSerializer(reservation)
     return serializer.data
+
+def get_reservation_data(reservation):
+    try:
+        return {
+            'id': reservation.id,
+            'startDate': reservation.startDate,
+            'endDate': reservation.endDate,
+            'qrCode': reservation.qrCode,
+            'qrCodeStatus': reservation.qrCodeStatus,
+            'user': get_user_data(reservation.user),
+            'checkedOut': reservation.checkedOut,
+        }
+    except AttributeError:
+        return None

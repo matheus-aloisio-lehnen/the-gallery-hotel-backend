@@ -1,0 +1,11 @@
+services:
+
+    gallery-backend:
+        container_name: gallery-backend
+        tty: true
+        build:
+            dockerfile: Dockerfile
+        volumes:
+            - .:/code
+        ports:
+            - '8000:8000'
